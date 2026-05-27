@@ -22,7 +22,6 @@
         .page {
             max-width: 1100px; /* Permite ocupar mais espaço horizontal na tela */
             width: 95%; /* Adapta melhor em monitores diferentes */
-            min-height: 297mm;
             margin: 0 auto;
             background-color: #f4f6f8;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -33,7 +32,7 @@
         /* A FAIXA BRANCA NO TOPO (Acima de tudo) */
         .top-band {
             width: 100%;
-            height: 35px;
+        height: 15px;
             background-color: #ffffff;
         }
 
@@ -49,24 +48,24 @@
             width: 27%; /* Reduzido para dar mais espaço ao conteúdo principal */
             background-color: #2b3a4a;
             color: #ffffff;
-            padding: 40px 20px;
+        padding: 20px 15px;
         }
 
         .sidebar img {
-            width: 150px;
-            height: 150px;
+        width: 100px;
+        height: 100px;
             border-radius: 50%;
             border: 3px solid #4a5a6a;
             display: block;
-            margin: 0 auto 30px auto;
+        margin: 0 auto 15px auto;
             object-fit: cover;
         }
 
         .sidebar h3 {
             border-bottom: 1px solid #4a5a6a;
-            padding-bottom: 8px;
-            margin-top: 35px;
-            margin-bottom: 15px;
+        padding-bottom: 4px;
+        margin-top: 15px;
+        margin-bottom: 8px;
             font-size: 1.1em;
             color: #ffffff;
             text-transform: uppercase;
@@ -79,7 +78,7 @@
             font-size: 0.95em;
         }
 
-        .sidebar ul li { margin-bottom: 10px; }
+        .sidebar ul li { margin-bottom: 6px; }
         
         /* Ícones de Contato */
         .sidebar ul i {
@@ -98,14 +97,14 @@
         /* --- CORPO PRINCIPAL --- */
         .main {
             width: 73%; /* Expandido para aproveitar a largura */
-            padding: 40px 50px; /* Um pouco mais de respiro interno */
+        padding: 20px 30px; /* Um pouco mais de respiro interno */
             background-color: #f4f6f8;
         }
 
         .main h1 {
-            font-size: 2.8em;
+        font-size: 2.3em;
             color: #2b3a4a;
-            margin-bottom: 8px;
+            margin-bottom: 2px;
             line-height: 1.1;
         }
 
@@ -113,7 +112,7 @@
             font-size: 1.05em;
             color: #555;
             font-weight: 600;
-            margin-bottom: 35px;
+            margin-bottom: 12px;
             line-height: 1.5;
         }
 
@@ -126,46 +125,57 @@
         /* --- CARDS MODULARES --- */
         .card {
             background: #ffffff;
-            padding: 25px 30px;
+            padding: 12px 18px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             border: 1px solid #eaeaea;
-            break-inside: avoid; /* Evita que o card corte no meio ao trocar de página */
         }
 
         .card h2 {
             color: #2b3a4a;
             border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.5em;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            font-size: 1.25em;
+            break-after: avoid; /* Não deixa o título órfão no final da página */
+            page-break-after: avoid;
         }
 
-        .item { margin-bottom: 20px; }
+    .item { 
+        margin-bottom: 10px; 
+    }
         .item:last-child { margin-bottom: 0; }
 
         .item h4 {
             font-size: 1.1em;
             color: #333;
             margin-bottom: 4px;
+            break-after: avoid;
+            page-break-after: avoid;
         }
         .item .meta {
             font-size: 0.9em;
             color: #777;
             font-style: italic;
-            margin-bottom: 10px;
+        margin-bottom: 4px;
+            break-after: avoid;
+            page-break-after: avoid;
         }
         .item p, .item ul {
-            line-height: 1.6;
+        line-height: 1.4;
             color: #444;
-            font-size: 0.95em;
+        font-size: 0.9em;
         }
         .item ul {
             padding-left: 20px;
-            margin-top: 5px;
+        margin-top: 4px;
         }
-        .item ul li { margin-bottom: 5px; }
+        .item ul li { 
+        margin-bottom: 3px;
+            break-inside: avoid; /* Evita que uma mesma linha seja cortada ao meio */
+            page-break-inside: avoid;
+        }
 
         /* --- CONFIGURAÇÕES DO PDF --- */
         @media print {
@@ -180,11 +190,43 @@
                 max-width: 100% !important; /* Força a ocupar toda a largura do PDF ao imprimir */
             }
         }
+
+        /* --- BOTÃO FLUTUANTE DO PDF --- */
+        .btn-pdf {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2b3a4a;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+        .btn-pdf:hover {
+            background-color: #1a2530;
+            transform: translateY(-3px);
+        }
+        @media print {
+            .btn-pdf { display: none !important; }
+        }
     </style>
+    
+    <!-- Biblioteca html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-<div class="page">
+<!-- Botão para gerar PDF -->
+<button class="btn-pdf" onclick="gerarPDF()">
+    <i class="fas fa-file-download"></i> Baixar PDF
+</button>
+
+<div class="page" id="curriculo-conteudo">
     <!-- Faixa branca no topo de ponta a ponta -->
     <div class="top-band"></div>
 
@@ -230,9 +272,7 @@
             <div class="card">
                 <h2>Resumo</h2>
                 <div class="item">
-                    <p style="margin-bottom: 10px;">Estudante de Estatística e Ciência de Dados na Universidade Federal do Paraná (UFPR), possuo forte rigor analítico e compreensão matemática profunda aplicada à resolução de problemas complexos. Tenho experiência prática em modelagem quantitativa, análise exploratória e projetos de dados voltados para a área de saúde mental.</p>
-                    <p style="margin-bottom: 10px;">Utilizo meu embasamento teórico estatístico para desenvolver soluções robustas, extraindo valor dos dados através de ferramentas como <strong>R (Shiny, tidyverse)</strong>, <strong>SQL avançado</strong> (CTEs, Views, Window Functions) e <strong>JavaScript / Google Apps Script</strong>. Aliado a isso, destaco vasta experiência na modelagem e criação de planilhas automatizadas para gestão financeira e otimização de fluxos organizacionais.</p>
-                    <p>Meu objetivo é unir métodos quantitativos e programação para transformar informações brutas em inteligência acionável. Busco oportunidades de estágio em Ciência de Dados e Análise Avançada, onde possa agregar valor técnico no apoio à tomada de decisão.</p>
+                    <p>Estudante de Estatística e Ciência de Dados (UFPR). Desenvolvo automações e soluções analíticas com <strong>R</strong>, <strong>SQL</strong> e <strong>Google Apps Script</strong>. Busco estágio em dados para aplicar modelagem quantitativa e transformar informações brutas em inteligência acionável.</p>
                 </div>
             </div>
 
@@ -295,5 +335,24 @@
     </div>
 </div>
 
+<script>
+    function gerarPDF() {
+        // Pega o elemento exato que queremos converter (a página)
+        const elemento = document.getElementById('curriculo-conteudo');
+        
+        // Opções de configuração do PDF
+        const opcoes = {
+            margin:       0,
+            filename:     'Thiago_Roberto_Alves_Curriculo.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true }, // scale: 2 melhora a resolução
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: 'css', avoid: ['h2', 'h4', '.meta', 'li'] }
+        };
+
+        // Gera e faz o download
+        html2pdf().set(opcoes).from(elemento).save();
+    }
+</script>
 </body>
 </html>
