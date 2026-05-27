@@ -1,4 +1,4 @@
-<h1 align="center">Olá, eu sou o Thiago Roberto Alves 👋</h1>
+<h1 align="center">Opa, eu sou o Thiago Roberto Alves 👋</h1>
 
 <h3 align="center">📊 Estatístico e Cientista de Dados em formação | ⚙️ Automação de Processos</h3>
 
